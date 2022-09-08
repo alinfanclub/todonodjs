@@ -1,9 +1,9 @@
 import axios from "axios";
 
-const url = 'http://localhost:5000/api/posts/';
+const url = 'http://localhost:5000/api/';
 
 function fectchPostList() {
-    return axios.get(`${url}/list.json`)
+    return axios.get(`${url}posts`)
 }
 
 export {fectchPostList}
