@@ -1,7 +1,7 @@
 import { createStore } from 'vuex'
 import mutation from './mutaition'
 import getters from "./getters";
-import actions from "./action";
+import actions from "./actions";
 
 const store = createStore({
   state(){

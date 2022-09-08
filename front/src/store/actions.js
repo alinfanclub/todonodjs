@@ -4,6 +4,5 @@ export default {
         fectchPostList(pageName)
         .then (({data})=> commit("SET_POST", data))
         .catch((error) => console.log(error));
-            
     }
 }
