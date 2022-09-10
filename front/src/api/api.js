@@ -1,12 +1,21 @@
 import axios from "axios";
 
-const url = 'http://localhost:5000/api/';
+const url = 'http://localhost:5000/api/posts/';
 
 function fectchPostList() {
-    return axios.get(`${url}posts`)
+    return axios.get(`${url}`)
+}
+function createPost(postData) {
+    return axios.post(`${url}`, postData);
 }
 
-export {fectchPostList}
+function deleatePost(id) {
+    return axios.delete(`${url}/${id}`);
+}
+
+
+export {fectchPostList, createPost, deleatePost}
+
 // class PostService {
 //    // Get Poosts 
 //     static getPosts() {
