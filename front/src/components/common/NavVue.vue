@@ -6,7 +6,7 @@
         </button>
       
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
+          <ul class="navbar-nav m-auto">
             <li class="nav-item">
            <router-link to="/"  class="nav-link">main</router-link>
             </li>
@@ -29,5 +29,7 @@ export default {
 </script>
 
 <style>
-
+.navbar-brand {
+  position: absolute;
+}
 </style>

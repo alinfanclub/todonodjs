@@ -3,7 +3,7 @@ import { createWebHistory, createRouter } from "vue-router";
 const routes = [
   {
     path: "/",
-    component: () => import("@/components/MainVue.vue"),
+    component: () => import("@/views/MainView.vue"),
     children: [
       {
         path: "/",
@@ -13,6 +13,10 @@ const routes = [
         path: "/write",
         component: () => import("@/components/WriteVue.vue"),
       },
+      {
+        path: "/edit/:id",
+        component: () => import("@/components/EditVue.vue")
+      }
     ]
   },
   {

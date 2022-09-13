@@ -1,8 +1,9 @@
 <template>
     <form  @submit.prevent="createPost">
         <div class="form-group">
-          <label for="todo">할일</label>
-          <input type="text" class="form-control" id="todo" aria-describedby="" name="title" v-model="title" required>
+          <label for="todo">시 등록하기</label>
+          <input type="text" class="form-control" aria-describedby="" name="title" v-model="title" required>
+          <input type="date" class="form-control" required v-model="date">
           <textarea v-model="content" class="form-control" required></textarea>
         </div>
         <button type="submit" class="btn btn-primary" @keypress="enter">Submit</button>
@@ -15,6 +16,7 @@ export default {
     return {
       title: '',
       content: '',
+      date: '',
     }
   },
   methods: {
@@ -23,6 +25,8 @@ export default {
                 const postData = {
                     text: this.title,
                     content: this.content,
+                    date: this.date,
+                    fix: false,
                 };
                 await this.$store.dispatch("CREATE_POST", postData);
                 this.$router.push("/");

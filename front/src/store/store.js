@@ -9,6 +9,11 @@ const store = createStore({
       postlist: [],
       text: '',
       content: '',
+      editT: '',
+      editC: '',
+      editCA: '',
+      editD: '',
+      id: '',
     }
   },
   mutations,

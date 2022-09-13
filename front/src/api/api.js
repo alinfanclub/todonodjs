@@ -8,13 +8,15 @@ function fectchPostList() {
 function createPost(postData) {
     return axios.post(`${url}`, postData);
 }
-
 function deleatePost(id) {
     return axios.delete(`${url}/${id}`);
 }
+function editPost(editData, id) {
+    return axios.post(`${url}edit/${id}`, editData, id)
+}
 
 
-export {fectchPostList, createPost, deleatePost}
+export {fectchPostList, createPost, deleatePost, editPost}
 
 // class PostService {
 //    // Get Poosts 

@@ -1,4 +1,4 @@
-import { fectchPostList, createPost } from "@/api/api.js"
+import { fectchPostList, createPost} from "@/api/api.js"
 export default {
     FETCH_POST_LIST({ commit }) {
         fectchPostList()
