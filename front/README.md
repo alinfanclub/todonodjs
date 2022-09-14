@@ -12,7 +12,7 @@
 > 1. deleate(insertOne) / upload(uploadOne) 시 몽고디비의 objectId 를 가졍오는데 발생한 오류  
         "server stated on port 5000 (node:56736) unhandledpromiserejectionwarning: bsontypeerror: argument passed in must be a string of 12 bytes or a string of 24 hex characters or an integer"  
                 메세지가 나오면서 서버 통신 오류가 발생  
-                
+
                     ```javascript  
                     
                     const express = require('express');
