@@ -1,9 +1,6 @@
 <template>
   <div>
-   <!-- <div v-if="this.$store.state.postlist.length == 0">  
-      <p>no data</p>
-    </div> -->
-    <spinner-vue v-if="this.$store.state.loading"></spinner-vue>
+    <SpinnerVue v-if="this.$store.state.loading == true"></SpinnerVue>
     <div>
       <ul>
         <li 
@@ -36,7 +33,7 @@
                   posts.date)"
                   class="editBtn"
                   >
-                 <ion-icon name="pencil-outline"></ion-icon>
+                 <ion-icon name="pencil-sharp"></ion-icon>
               </button>
              </div>
             </div>
@@ -46,6 +43,12 @@
             <div class="createAt" v-else>게시글 수정: {{posts.createAt}}</div>
           </div>
         </li>
+        <div v-if="this.$store.state.nodata == true" class="noData">  
+            <p>정보를 불러오는데 실패했습니다.</p>
+        </div>
+        <div v-if="this.$store.state.postlist.length == 0 && this.$store.state.nodata == false" class="noData">  
+            <p>데이터가 없습니다.</p>
+        </div>
       </ul>
     </div>
     <div id="pagiNation">
@@ -108,7 +111,6 @@ export default {
     }
   },
   created() {
-     this.$store.state.loading = true
      this.$store.dispatch("FETCH_POST_LIST");
   }
 }
@@ -130,6 +132,12 @@ ul {
 li {
   display: flex;
 }
+/* .noData {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+} */
 textarea.form-control {
   height: 200px;
   outline: none;

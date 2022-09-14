@@ -10,12 +10,7 @@
 </template>
 <script>
 export default {
-    props: {
-        loading: {
-            type: Boolean,
-            required: true
-        }
-    }
+    
 }
 </script>
 <style>
