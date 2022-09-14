@@ -7,6 +7,10 @@
         <div>
         </div>
     </div>
+    <!-- <div class="spinner-cat">
+        <img src="../../assets/giphy2.gif">
+        <p>loading..</p>
+    </div> -->
 </template>
 <script>
 export default {
@@ -51,5 +55,15 @@ export default {
         top: 19px;
         height: 25px;
     }
+}
+.spinner-cat {
+    position: absolute;
+    transform: translate(-50%, -50%);
+    top: 50%;
+    left: 50%;    
+    text-align: center;
+}
+.spinner-cat  img {
+    min-width: 400px;
 }
 </style>

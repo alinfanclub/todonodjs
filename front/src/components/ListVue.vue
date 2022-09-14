@@ -132,12 +132,12 @@ ul {
 li {
   display: flex;
 }
-/* .noData {
+.noData {
   position: absolute;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-} */
+}
 textarea.form-control {
   height: 200px;
   outline: none;
@@ -195,7 +195,7 @@ textarea.form-control {
   width: 100%;
   display: flex;
   justify-content: center;
-  position: sticky;
+  position: fixed;
   bottom: 0;
   background-color: #fff;
   border-top: 1px dashed #ddd;
