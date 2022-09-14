@@ -1,8 +1,9 @@
 <template>
   <div>
-   <div v-if="this.$store.state.postlist.length == 0">  
+   <!-- <div v-if="this.$store.state.postlist.length == 0">  
       <p>no data</p>
-    </div>
+    </div> -->
+    <spinner-vue v-if="this.$store.state.loading"></spinner-vue>
     <div>
       <ul>
         <li 
@@ -65,6 +66,7 @@
 import store from "../store/store"
 import {deleatePost} from "../api/api"
 import handlePagination from "../handle/handlePagination";
+import SpinnerVue from "./spinner/SpinnerVue.vue"
 export default {
   data() {
     return {
@@ -72,6 +74,9 @@ export default {
       height: '',
       data: [],
     }
+  },
+  components: {
+    SpinnerVue
   },
   setup() {
     const handlePaginationValue = handlePagination();
@@ -103,6 +108,7 @@ export default {
     }
   },
   created() {
+     this.$store.state.loading = true
      this.$store.dispatch("FETCH_POST_LIST");
   }
 }

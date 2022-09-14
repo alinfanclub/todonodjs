@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const chalk = require('chalk');
 
 const app = express();
 
@@ -15,4 +16,4 @@ app.use('/api/posts', posts);
 const port = process.env.PORT || 5000;
 
 app.listen(port, () =>
-  console.log(`Server stated on port ${port}`));
+  console.log(chalk.white.bgMagentaBright.bold(`Server stated on port ${port}`)));

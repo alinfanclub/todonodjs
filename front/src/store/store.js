@@ -14,6 +14,7 @@ const store = createStore({
       editCA: '',
       editD: '',
       id: '',
+      loading: true
     }
   },
   mutations,

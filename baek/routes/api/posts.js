@@ -14,16 +14,46 @@ router.post('/', async (req, res) => {
     const post = await loadPostCollection();
     await post.insertOne({
         text: req.body.text,
-        createAt: new Date()
+        content: req.body.content,
+        date: req.body.date,
+        createAt: new Date().toLocaleString(),
+        fix: false,
     });
     res.status(201).send();
 })
 
 // delete post
 router.delete('/:id', async (req, res) => {
+   try {
     const post = await loadPostCollection();
-    await post.deleteOne({_id: new mongodb.ObjectID(req.params.id)})
+    await post.deleteOne({_id: new mongodb.ObjectId(req.params.id)})
     res.status(200).send();
+   } catch (error) {
+        console.log(error);
+   }
+})
+
+// edit post
+
+router.post('/edit/:id', async (req, res) => {
+   try {
+    const post = await loadPostCollection();
+    await post.updateOne(
+        { _id: new mongodb.ObjectId(req.params.id)},
+        {
+          $set: {
+            text: req.body.text,
+            content: req.body.content,
+            date: req.body.date,
+            createAt: new Date().toLocaleString(),
+            fix: true,
+          }
+        }
+    );
+    res.status(201).send();
+   } catch (error) {
+    console.log(error);
+   }
 })
 
 async function loadPostCollection() {
