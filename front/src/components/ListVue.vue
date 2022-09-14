@@ -126,7 +126,7 @@ textarea {
 }
 ul {
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   padding-top: 50px;
 }
 li {

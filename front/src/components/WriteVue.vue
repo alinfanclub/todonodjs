@@ -16,24 +16,27 @@ export default {
     return {
       title: '',
       content: '',
-      date: '',
+      date: new Date(),
     }
   },
   methods: {
-     async createPost() {
-            try {
-                const postData = {
-                    text: this.title,
-                    content: this.content,
-                    date: this.date,
-                    fix: false,
-                };
-                await this.$store.dispatch("CREATE_POST", postData);
-                this.$router.push("/");
-            } catch (error) {
-                console.log(error);
-            }
-        },
+    async createPost() {
+          try {
+              const postData = {
+                  text: this.title,
+                  content: this.content,
+                  date: this.date,
+                  fix: false,
+              };
+              await this.$store.dispatch("CREATE_POST", postData);
+              this.$router.push("/");
+          } catch (error) {
+              console.log(error);
+          }
+      },
+  },
+  computed : {
+    newDate: this.date = new Date
   },
 }
 </script>
