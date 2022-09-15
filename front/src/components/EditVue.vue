@@ -15,7 +15,6 @@ import {editPost} from "@/api/api.js"
 export default {
   data() {
     return {
-      id: this.$store.state.id,
       title: this.$store.state.editT,
       content: this.$store.state.editC,
       date: this.$store.state.editD,

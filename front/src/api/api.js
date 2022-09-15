@@ -12,7 +12,7 @@ function deleatePost(id) {
     return axios.delete(`${url}/${id}`);
 }
 function editPost(editData, id) {
-    return axios.post(`${url}edit/${id}`, editData, id)
+    return axios.post(`${url}edit/${id}`, editData)
 }
 
 
