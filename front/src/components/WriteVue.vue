@@ -11,6 +11,14 @@
           <label for="date">일자</label>
           <input type="date" class="form-control" id="date" v-model="date" data-placeholder="날짜를 입력해주세요" required >
         </div>
+        <div class="flex-label">
+          <label for="date">종류</label>
+         <select class="w-100" v-model="selectType" required>
+            <option value="" disabled>시 타입</option>
+            <option value="자작 시">자작 시</option>
+            <option value="가져온 시">가져온 시</option>
+         </select>
+        </div>
         <!-- <div class="flex-label">
           <label for="img">이미지</label>
           <input type="file">
@@ -32,6 +40,7 @@ export default {
       title: '',
       content: '',
       date: "",
+      selectType: "",
     }
   },
   methods: {
@@ -41,6 +50,7 @@ export default {
                   text: this.title,
                   content: this.content,
                   date: this.date,
+                  selectType: this.selectType,
                   fix: false,
               };
               await this.$store.dispatch("CREATE_POST", postData);
@@ -82,12 +92,12 @@ export default {
 textarea {
   resize: none;
   width: 300px;
-  height: 200px;
+  height: 600px;
   outline: none;
   cursor:unset;
 }
 textarea.form-control {
-  height: 200px;
+  height: 600px;
 }
 .submit-btn {
   position: absolute;

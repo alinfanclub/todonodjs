@@ -6,8 +6,12 @@ const routes = [
     component: () => import("@/views/MainView.vue"),
     children: [
       {
+        path: "/list/:id",
+        component: () => import("@/components/ContentsVue.vue"),
+      },
+      {
         path: "/",
-        component: () => import("@/components/ListVue.vue"),
+        component: () => import(/* webpackChunkName: "board" */"@/components/ListVue.vue"),
       },
       {
         path: "/write",

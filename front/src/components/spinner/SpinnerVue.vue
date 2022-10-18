@@ -1,10 +1,12 @@
 <template>
-    <div class="lds-facebook">
-        <div>
-        </div>
-        <div>
-        </div>
-        <div>
+    <div id="bg_mask">
+        <div class="lds-facebook">
+            <div>
+            </div>
+            <div>
+            </div>
+            <div>
+            </div>
         </div>
     </div>
     <!-- <div class="spinner-cat">
@@ -18,6 +20,14 @@ export default {
 }
 </script>
 <style>
+#bg_mask {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.071);
+}
 .lds-facebook {
     display: inline-block;
     position: absolute;

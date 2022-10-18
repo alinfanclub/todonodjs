@@ -1,210 +1,174 @@
 <template>
-  <div>
+  <div id="ListVue">
     <SpinnerVue v-if="this.$store.state.loading == true"></SpinnerVue>
-    <div>
-      <ul>
-        <li 
-        v-for="(posts, index) in paginatedData" 
-        :key="index"
-        :item = "posts"
-        :index = "index"
-        class="postList"
-        >
-          <div>
-            <div class="poemTitle">
-              <div> 
-                <div>{{posts.text}}</div>
-                <span class="poemDate">{{posts.date}}</span>
-              </div>
-             <div>
-               <button 
-              @click="clicked =deleate(posts._id.toString())"
-              class="closeBtn"  
-              >
-                  <ion-icon name="close-outline"></ion-icon>
-              </button>
-              <button 
-                @click="editPost(
-                  posts._id.toString(),
-                  posts._id.toString(), 
-                  posts.text, 
-                  posts.content, 
-                  posts.createAt, 
-                  posts.date)"
-                  class="editBtn"
-                  >
-                 <ion-icon name="pencil-sharp"></ion-icon>
-              </button>
-             </div>
-            </div>
-            <div class="poemContent">{{posts.content}}</div>
-              <!-- <textarea v-model="posts.content" readonly class="form-control"></textarea>  -->
-            <div class="createAt" v-if="posts.fix == false">게시글 작성: {{posts.createAt}}</div>
-            <div class="createAt" v-else>게시글 수정: {{posts.createAt}}</div>
-          </div>
-        </li>
-        <div v-if="this.$store.state.nodata == true" class="noData">  
-            <p>정보를 불러오는데 실패했습니다.</p>
-        </div>
-        <div v-if="this.$store.state.postlist.length == 0 && this.$store.state.nodata == false" class="noData">  
-            <p>데이터가 없습니다.</p>
-        </div>
-      </ul>
+    <div class="sort_type">
+         <label for="date">시 종류</label>
+         <select class="w-100" v-model="selectType">
+            <option value="전체">전체</option>
+            <option value="자작 시">자작 시</option>
+            <option value="가져온 시">가져온 시</option>
+         </select>
     </div>
-    <div id="pagiNation">
-      <button @click="backPage">prev</button>
-        <button
-          v-for="item in Math.ceil(this.$store.state.postlist.length / perPage)"
-          :key="item"
-          @click="() => goToPage(item)"
-        >
-        {{ item }}
+    <table>
+        <colgroup>
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+            <col width="25%">
+        </colgroup>
+        <thead>
+            <tr>
+                <th>No.</th>
+                <th>Tilte</th>
+                <th>Type</th>
+                <th>date</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr v-for="(list, i) in paginatedData" :key="i">
+                <td>{{i+1}}</td>
+                <td><span class="cursor" @click="goToContent(list._id)">{{list.text}}</span></td>
+                <td>{{list.selectType}}</td>
+                <td>{{list.date}}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div class="btn-cover pagiNation">
+      <button :disabled="pageNum === 0" @click="prevPage" class="page-btn">
+        이전
       </button>
-      <button @click="nextPage">next</button>
+      <span class="page-count">{{ pageNum + 1 }} / {{ pageCount }} 페이지</span>
+      <button :disabled="pageNum >= pageCount - 1" @click="nextPage" class="page-btn">
+        다음
+      </button>
     </div>
   </div>
 </template>
 
 <script>
-import store from "../store/store"
-import {deleatePost} from "../api/api"
-import handlePagination from "../handle/handlePagination";
 import SpinnerVue from "./spinner/SpinnerVue.vue"
 export default {
-  data() {
-    return {
-      clicked: null,
-      height: '',
-      data: [],
-    }
-  },
-  components: {
-    SpinnerVue
-  },
-  setup() {
-    const handlePaginationValue = handlePagination();
-    return { ...handlePaginationValue };
-  },
-  computed: {
-    posts: function() {
-      return store.state.postlist.reverse();
-    }
-  },
-  methods: {
-    async deleate(id) {
-      if(confirm("시를 삭제 한다구요??")) {
-          try {
-          await deleatePost(id)
-        } catch (error) {
-            console.log(error);
+    data() {
+        return {
+            selectType: '전체',
+            pageNum: 0,
+            pageSize: 10,
+            page:''
         }
-        this.$store.dispatch("FETCH_POST_LIST");
-      }
     },
-    editPost(id, data, title, content, createAt, date) {
-      this.$store.state.id = id
-      this.$store.state.editT = title
-      this.$store.state.editC = content
-      this.$store.state.editCA =  createAt
-      this.$store.state.editD = date
-      this.$router.push("/edit/" + data)
+    components : {
+        SpinnerVue
+    },
+    created() {
+        this.$store.dispatch("FETCH_POST_LIST");
+    },
+    computed: {
+        postListReverse () {
+            return this.$store.state.postlist.slice().reverse();
+        },
+        pageCount () {
+            let listLeng = this.$store.state.postlist.length,
+                listSize = this.pageSize,
+                page = Math.floor(listLeng / listSize);
+            if (listLeng % listSize > 0) page += 1;
+            
+            /*
+            아니면 page = Math.floor((listLeng - 1) / listSize) + 1;
+            이런식으로 if 문 없이 고칠 수도 있다!
+            */
+            return page;
+        },
+        paginatedData () {
+            const start = this.pageNum * this.pageSize,
+                    end = start + this.pageSize;
+            return this.postListReverse.slice(start, end);
+        }
+    },
+    methods: {
+        goToContent(e) {
+            this.$router.push("/list/" + e)
+        },
+        nextPage () {
+        this.pageNum += 1;
+        },
+        prevPage () {
+            this.pageNum -= 1;
+        }
     }
-  },
-  created() {
-     this.$store.dispatch("FETCH_POST_LIST");
-  }
 }
 </script>
 
 <style scoped>
-textarea {
-  resize: none;
-  width: 300px;
-  height: 200px;
-  outline: none;
-  cursor:unset;
-}
-ul {
-  display: flex;
-  justify-content: space-around;
-  padding-top: 50px;
-}
-li {
-  display: flex;
-}
-.noData {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-textarea.form-control {
-  height: 200px;
-  outline: none;
-  border: 1px solid #9c9c9c;
-  box-shadow: none;
-  background-color: #fff;
-}
-.closeBtn, .editBtn {
-  background-color: #fff;
-  border: none;
-}
-.poemTitle {
-  height: 50px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.poemTitle > div {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.poemTitle > div span {
-  margin-left: 50px;
-}
-.poemTitle ion-icon {
-  font-size: 20px;
-}
-.poemTitle ion-icon:hover {
-  background-color: #ddd;
-}
-.poemContent {
-   white-space:pre;
-}
-.poemDate {
-  font-size: .5rem;
-  color: #ddd;
-}
-.createAt {
-  width: 100%;
-  text-align: right;
-  color: #ddd;
-  font-size: .5rem;
-}
-.postList {
-  margin-bottom: 100px;
-
-}
-.postList > div:nth-child(1) {
-  padding: 1rem;
-  border: 1px dashed #eee;
-  min-width: 500px;
-}
-#pagiNation {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  position: fixed;
-  bottom: 0;
-  background-color: #fff;
-  border-top: 1px dashed #ddd;
-}
-#pagiNation button {
-  border: none;
-  min-width: 20px;
-  padding: 5px;
-  margin: 0 10px;
-  background-color:transparent;
-}
+    #ListVue {
+        width: 80%;
+        margin: 0 auto;
+        color: #333;
+    }
+    table {
+        width: 100%;
+        margin-top: 100px;
+    }
+    table th, table td {
+        height: 75px;
+        text-align: center;
+        border: 0.5px solid #333;
+        border-right: none;
+        border-left: none;
+    }
+    table th {
+        border-top: none;
+    }
+    table tbody tr:hover td{
+        background-color: #555;
+        color: #fff;
+    }
+    table span.cursor {
+        cursor: pointer;
+    }
+    .sort_type {
+        display: flex;
+        align-items: center;
+        width: 20%;
+        margin: 0 auto;
+    }
+    .sort_type label {
+        width: 100px;
+    }
+    .pagiNation {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        position: fixed;
+        left: 50%;
+        transform: translateX(-50%);
+        bottom: 0;
+        background-color: #fff;
+        border-top: 1px dashed #ddd;
+    }
+    #pagiNation button {
+        border: none;
+        min-width: 20px;
+        padding: 5px;
+        margin: 0 10px;
+        background-color:transparent;
+    }
+    .btn-cover {
+        margin-top: 1.5rem;
+        text-align: center;
+    }
+    .btn-cover .page-btn {
+        width: 5rem;
+        height: 2rem;
+        letter-spacing: 0.5px;
+    }
+    .btn-cover .page-count {
+        padding: 0 1rem;
+    }
+    .noData {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+    }
 </style>

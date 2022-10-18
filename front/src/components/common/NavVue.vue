@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style>
-.navbar-brand {
+/* .navbar-brand {
   position: absolute;
-}
+} */
 </style>

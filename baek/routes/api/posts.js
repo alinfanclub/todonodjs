@@ -16,6 +16,7 @@ router.post('/', async (req, res) => {
         text: req.body.text,
         content: req.body.content,
         date: req.body.date,
+        selectType: req.body.selectType,
         createAt: new Date().toLocaleString(),
         fix: false,
     });
@@ -45,6 +46,7 @@ router.post('/edit/:id', async (req, res) => {
             text: req.body.text,
             content: req.body.content,
             date: req.body.date,
+            selectType: req.body.selectType,
             createAt: new Date().toLocaleString(),
             fix: true,
           }

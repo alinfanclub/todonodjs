@@ -13,6 +13,7 @@ const store = createStore({
       editC: '',
       editCA: '',
       editD: '',
+      selectType: '',
       id: '',
       loading: false,
       nodata: false
