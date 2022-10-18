@@ -1,14 +1,14 @@
 <template>
   <div id="ListVue">
     <SpinnerVue v-if="this.$store.state.loading == true"></SpinnerVue>
-    <div class="sort_type">
+    <!-- <div class="sort_type">
          <label for="date">시 종류</label>
          <select class="w-100" v-model="selectType">
             <option value="전체">전체</option>
             <option value="자작 시">자작 시</option>
             <option value="가져온 시">가져온 시</option>
          </select>
-    </div>
+    </div> -->
     <table>
         <colgroup>
             <col width="25%">
@@ -130,7 +130,6 @@ export default {
         display: flex;
         align-items: center;
         width: 20%;
-        margin: 0 auto;
     }
     .sort_type label {
         width: 100px;
